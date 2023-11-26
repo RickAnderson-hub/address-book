@@ -27,5 +27,5 @@
         Accessibility Features: Ensure the application is accessible (keyboard navigation, screen reader friendly, etc.).
 
     Additional Ideas:
-        Contact History: Keep a log of interactions (calls, emails) with contacts.
+        ContactItem History: Keep a log of interactions (calls, emails) with contacts.
         Social Media Integration: Link contacts to their social media profiles.

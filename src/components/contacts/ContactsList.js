@@ -1,14 +1,14 @@
 import React from 'react';
-import Contact from './Contact';
+import ContactItem from './ContactItem';
 
-function ContactsList({contacts}) {
+function ContactList({contacts, onDelete, onEdit}) {
     return (
-        <ul className="list-group">
+        <div>
             {contacts.map(contact => (
-                <Contact key={contact.id} contact={contact}/>
+                <ContactItem key={contact.id} contact={contact} onDelete={onDelete} onEdit={onEdit}/>
             ))}
-        </ul>
+        </div>
     );
 }
 
-export default ContactsList;
+export default ContactList;
