@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Contact({ contact }) {
+function Contact({contact}) {
     return (
         <li className="list-group-item">
             <h5>{contact.name}</h5>
