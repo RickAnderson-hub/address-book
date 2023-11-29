@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import MockContacts from './components/utils/MockContacts';
-import ContactList from './components/contacts/ContactsList'; // Assuming you have this component
+import ContactList from './components/contacts/ContactList';
 
 function App() {
+    //ContactsList takes an array of contacts and maps them to individual Contact components.
     const [contacts, setContacts] = useState([]);
 
     const handleContactsLoaded = (mockContacts) => {
