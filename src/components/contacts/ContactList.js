@@ -1,11 +1,11 @@
 import React from 'react';
 import Contact from './Contact';
 
-function ContactList({ contacts }) {
+function ContactList({ contacts, onDelete, onEdit }) {
     return (
         <ul className="list-group">
             {contacts.map(contact => (
-                <Contact key={contact.id} contact={contact} />
+                <Contact key={contact.id} contact={contact} onDelete={onDelete} onEdit={onEdit}/>
             ))}
         </ul>
     );

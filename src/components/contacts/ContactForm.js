@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
-function ContactForm({initialContact, handleSubmit, buttonLabel}) {
-    const [contact, setContact] = useState(initialContact || {name: '', email: '', phone: ''});
+function ContactForm({ initialContact, handleSubmit, buttonLabel }) {
+    const [contact, setContact] = useState(initialContact || { name: '', email: '', phone: '' });
 
     useEffect(() => {
         if (initialContact) {
@@ -10,7 +10,7 @@ function ContactForm({initialContact, handleSubmit, buttonLabel}) {
     }, [initialContact]);
 
     const onChange = (e) => {
-        setContact({...contact, [e.target.name]: e.target.value});
+        setContact({ ...contact, [e.target.name]: e.target.value });
     };
 
     const onSubmit = (e) => {
