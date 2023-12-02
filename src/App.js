@@ -9,14 +9,32 @@ function App() {
     const [currentContact, setCurrentContact] = useState(null);
 
     useEffect(() => {
-        // Fetch contacts from API and setContacts
+        const fetchContacts = async () => {
+            try {
+                const response = await fetch('https://your-api-url/contacts');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setContacts(data);
+            } catch (error) {
+                console.error('There was a problem with the fetch operation:', error);
+            }
+        };
+
+        fetchContacts();
     }, []);
 
     const handleAddOrUpdate = (contact) => {
         if (contact.id) {
-            // Update contact in API and state
+            setContacts(contacts.map(c => c.id === contact.id ? contact : c));
         } else {
-            // Add contact to API and state
+            const newContact = {
+                ...contact,
+                id: contacts.length > 0 ? Math.max(...contacts.map(c => c.id)) + 1 : 1,
+            };
+            setContacts([...contacts, newContact]);
+            
         }
     };
 
@@ -31,18 +49,18 @@ function App() {
     return (
         <div>
             <h1>My Address Book</h1>
-            {/*<MockContacts onContactsLoaded={handleContactsLoaded} />*/}
-            {/*<ContactList contacts={contacts} />*/}
-            <ContactForm
-                initialContact={currentContact}
-                handleSubmit={handleAddOrUpdate}
-                buttonLabel={currentContact ? "Update Contact" : "Add Contact"}
-            />
+            {contacts.length === 0 && <MockContacts onContactsLoaded={handleContactsLoaded} />}
             <ContactList
                 contacts={contacts}
                 onDelete={handleDelete}
                 onEdit={setCurrentContact}
             />
+            <ContactForm
+                initialContact={currentContact}
+                handleSubmit={handleAddOrUpdate}
+                buttonLabel={currentContact ? "Update Contact" : "Add Contact"}
+            />
+            
         </div>
     );
 }
