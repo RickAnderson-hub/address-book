@@ -39,7 +39,14 @@ function App() {
     };
 
     const handleDelete = (contactId) => {
-        // Delete contact from API and state
+        // Filter out the contact with the specified id
+    const updatedContacts = contacts.filter(contact => contact.id !== contactId);
+    setContacts(updatedContacts);
+
+    // If the current contact is the one being deleted, reset the current contact
+    if (currentContact && currentContact.id === contactId) {
+        setCurrentContact(null);
+    }
     };
 
     const handleContactsLoaded = (mockContacts) => {
