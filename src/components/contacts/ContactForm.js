@@ -20,25 +20,27 @@ function ContactForm({ initialContact, handleSubmit, buttonLabel }) {
 
     return (
         <form onSubmit={onSubmit}>
-            <input
-                name="name"
-                value={contact.name}
-                onChange={onChange}
-                placeholder="Name"
-                required
-            />
-            <input
-                name="email"
-                value={contact.email}
-                onChange={onChange}
-                placeholder="Email"
-            />
-            <input
-                name="phone"
-                value={contact.phone}
-                onChange={onChange}
-                placeholder="Phone"
-            />
+            <div>
+                <input
+                    name="name"
+                    value={contact.name}
+                    onChange={onChange}
+                    placeholder="Name"
+                    required
+                />
+                <input
+                    name="email"
+                    value={contact.email}
+                    onChange={onChange}
+                    placeholder="Email"
+                />
+                <input
+                    name="phone"
+                    value={contact.phone}
+                    onChange={onChange}
+                    placeholder="Phone"
+                />
+            </div>
             <button type="submit">{buttonLabel}</button>
         </form>
     );
