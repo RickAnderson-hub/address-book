@@ -8,23 +8,6 @@ function App() {
     const [contacts, setContacts] = useState([]);
     const [currentContact, setCurrentContact] = useState(null);
 
-    useEffect(() => {
-        const fetchContacts = async () => {
-            try {
-                const response = await fetch('https://your-api-url/contacts');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                setContacts(data);
-            } catch (error) {
-                console.error('There was a problem with the fetch operation:', error);
-            }
-        };
-
-        fetchContacts();
-    }, []);
-
     const handleAddOrUpdate = (contact) => {
         if (contact.id) {
             setContacts(contacts.map(c => c.id === contact.id ? contact : c));

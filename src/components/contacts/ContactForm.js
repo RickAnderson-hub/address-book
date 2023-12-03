@@ -27,7 +27,20 @@ function ContactForm({ initialContact, handleSubmit, buttonLabel }) {
                 placeholder="Name"
                 required
             />
-            {/* Inputs for email and phone, similar to the name input */}
+             <input
+                name="email"
+                value={contact.email}
+                onChange={onChange}
+                placeholder="Email"
+                required
+            />
+            <input
+                name="phone"
+                value={contact.phone}
+                onChange={onChange}
+                placeholder="Phone"
+                required
+            />
             <button type="submit">{buttonLabel}</button>
         </form>
     );
