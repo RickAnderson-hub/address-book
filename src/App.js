@@ -50,7 +50,6 @@ function App() {
                 handleSubmit={handleAddOrUpdate}
                 buttonLabel={currentContact ? "Update Contact" : "Add Contact"}
             />
-
         </div>
     );
 }
