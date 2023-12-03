@@ -27,19 +27,17 @@ function ContactForm({ initialContact, handleSubmit, buttonLabel }) {
                 placeholder="Name"
                 required
             />
-             <input
+            <input
                 name="email"
                 value={contact.email}
                 onChange={onChange}
                 placeholder="Email"
-                required
             />
             <input
                 name="phone"
                 value={contact.phone}
                 onChange={onChange}
                 placeholder="Phone"
-                required
             />
             <button type="submit">{buttonLabel}</button>
         </form>
