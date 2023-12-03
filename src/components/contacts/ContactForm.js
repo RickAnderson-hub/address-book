@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './css/contactForm.module.css';
 
 
-function ContactForm({ initialContact, handleSubmit, buttonLabel='Submit'}) {
+function ContactForm({ initialContact, handleSubmit, buttonLabel = 'Submit' }) {
     const [contact, setContact] = useState(initialContact || { name: '', email: '', phone: '' });
 
     useEffect(() => {
@@ -31,6 +31,7 @@ function ContactForm({ initialContact, handleSubmit, buttonLabel='Submit'}) {
                     className={styles.input}
                     required
                 />
+
                 <input
                     name="email"
                     value={contact.email}
@@ -38,6 +39,7 @@ function ContactForm({ initialContact, handleSubmit, buttonLabel='Submit'}) {
                     placeholder="Email"
                     className={styles.input}
                 />
+
                 <input
                     name="phone"
                     value={contact.phone}
@@ -45,6 +47,7 @@ function ContactForm({ initialContact, handleSubmit, buttonLabel='Submit'}) {
                     placeholder="Phone"
                     className={styles.input}
                 />
+
                 <button type="submit" className={styles.button}>{buttonLabel}</button>
             </div>
         </form>

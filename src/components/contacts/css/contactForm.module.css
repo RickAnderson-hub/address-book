@@ -43,6 +43,14 @@
     background-color: #0056b3; /* Ensure this color is different from the original */
 }
 
+.label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+
 
 .Red {
   color: #f00;
