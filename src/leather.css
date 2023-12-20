@@ -26,6 +26,11 @@ header {
     margin-bottom: 20px;
 }
 
+h1 {
+    font-family: 'Dancing Script', cursive;
+    /* ... other styles ... */
+}
+
 .icon-stack {
     position: absolute;
     right: 200px;
@@ -49,6 +54,7 @@ header {
 
 /* Basic styling for main content area */
 main {
+    background-image: url('../public/paper_texture.jpg');
     position: relative;
     background-color: #e4d7c5;
     padding: 20px;
@@ -90,4 +96,26 @@ main {
         padding: 5px;
     }
 }
+
+main::before, main::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+main::before {
+    bottom: 10px;
+    right: 10px;
+    box-shadow: 10px 10px 6px -7px rgba(0, 0, 0, 0.5);
+}
+
+main::after {
+    top: 10px;
+    left: 10px;
+    box-shadow: -10px -10px 6px -7px rgba(0, 0, 0, 0.5);
+}
+
 /* Additional styles for the leather texture, page effects, etc., can be added here */
