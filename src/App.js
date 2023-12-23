@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MockContacts from './components/utils/MockContacts';
 import ContactList from './components/contacts/ContactList';
 import ContactForm from "./components/contacts/ContactForm";
+import styles from './components/contacts/css/app.module.css';
 
 function App() {
 
@@ -37,19 +38,31 @@ function App() {
     };
 
     return (
-        <div>
-            <h1>My Address Book</h1>
-            {contacts.length === 0 && <MockContacts onContactsLoaded={handleContactsLoaded} />}
-            <ContactList
-                contacts={contacts}
-                onDelete={handleDelete}
-                onEdit={setCurrentContact}
-            />
-            <ContactForm
-                initialContact={currentContact}
-                handleSubmit={handleAddOrUpdate}
-                buttonLabel={currentContact ? "Update Contact" : "Add Contact"}
-            />
+        <div id="diaryContainer" className="{styles.diaryContainer}">
+            <header className={styles.header}>
+                <h1>My Contacts</h1>
+            </header>
+            <main className={styles.main}>
+                {contacts.length === 0 && <MockContacts onContactsLoaded={handleContactsLoaded} />}
+                <ContactList
+                    contacts={contacts}
+                    onDelete={handleDelete}
+                    onEdit={setCurrentContact}
+                />
+                <ContactForm
+                    initialContact={currentContact}
+                    handleSubmit={handleAddOrUpdate}
+                    buttonLabel={currentContact ? "Update Contact" : "Add Contact"}
+                />
+            </main>
+            <div className="{styles.icon-stack}">
+                <button id="addContact" className="{styles.icon-button}">
+                    <img src="add-contact.png" className="{styles.img}" alt="Add Contact" />
+                </button>
+                <button id="deleteContact" className="{styles.icon-button}">
+                    <img src="delete-contact.png" className="{styles.img}" alt="Delete Contact" />
+                </button>
+            </div>
         </div>
     );
 }
