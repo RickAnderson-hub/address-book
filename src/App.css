@@ -1,38 +1,194 @@
-.App {
-    text-align: center;
+body {
+    background-image: url('../public/leather.jpg');
+    background-repeat: repeat;
+    background-size: cover;
+    font-family: 'Times New Roman', serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
-}
-
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
+#diaryContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 60%;
+    background-color: #3a2a1a;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    color: black;
+    min-width: 600px;
+}
+
+header {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px; /* Adjust size as needed */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    /* ... other styles ... */
+}
+
+.icon-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.icon-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.icon-button img {
+    width: 100px; /* Adjust based on your icon size */
+    height: auto;
+}
+
+/* Basic styling for main content area */
+main {
+    display: flex;
     justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    background-image: url('../public/paper_texture.jpg');
+    position: relative;
+    overflow: hidden;
+    background-color: #e4d7c5;
+    min-height: 300px;
+    min-width: 500px;
 }
 
-.App-link {
-    color: #61dafb;
+.main .contact-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; /* Adjust size as needed */
+    color: black;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
+.main .contact-details {
+    font-family: 'Merriweather', serif;
+    font-size: 16px; /* Adjust size as needed */
+    color: black;
+}
+
+.main::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 20px; /* Adjust the width for spine thickness */
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+    transform: translateX(-50%);
+}
+
+.page {
+    width: 50%; /* Each page takes up half the space */
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #fefefe; /* Slightly different color for contrast */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 0 10px; /* Spacing between pages */
+    position: relative;
+    overflow: hidden; /* Ensures the pseudo-elements don't spill out */
+    transform: rotateY(0deg); /* Adjust for curvature */
+}
+
+.left-page {
+    text-align: left;
+    transform-origin: left; /* Pivot from the left side */
+}
+
+.left-page::before, .right-page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: -1;
+    transform: rotateY(-2deg); /* Curve for the left page */
+}
+
+.right-page {
+    text-align: right;
+    transform-origin: right; /* Pivot from the right side */
+}
+
+.right-page::before {
+    right: 0;
+    transform: rotateY(2deg); /* Curve for the right page */
+}
+
+.button, .label {
+    font-family: 'Roboto Slab', serif;
+    font-size: 14px; /* Adjust size as needed */
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+    .icon-stack {
+        right: 100px; /* Adjust position for smaller screens */
+        bottom: 180px;
     }
-    to {
-        transform: rotate(360deg);
+
+    .icon-button img {
+        width: 50px; /* Smaller icons for smaller screens */
+    }
+
+    /* Adjust main area or other elements if needed */
+    main {
+        /* Example: reduce padding for smaller screens */
+        padding: 10px;
     }
 }
+
+@media (max-width: 480px) {
+    .icon-stack {
+        right: 50px; /* Further adjust for very small screens */
+        bottom: 90px;
+    }
+
+    .icon-button img {
+        width: 40px; /* Even smaller icons for very small screens */
+    }
+
+    /* Further adjustments for the main area or other elements */
+    main {
+        padding: 5px;
+    }
+}
+
+main::before, main::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+main::before {
+    bottom: 10px;
+    right: 10px;
+    box-shadow: 10px 10px 6px -7px rgba(0, 0, 0, 0.5);
+}
+
+main::after {
+    top: 10px;
+    left: 10px;
+    box-shadow: -10px -10px 6px -7px rgba(0, 0, 0, 0.5);
+}
+
+/* Additional styles for the leather texture, page effects, etc., can be added here */

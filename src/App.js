@@ -1,26 +1,12 @@
 import React, { useState } from 'react';
 import MockContacts from './components/utils/MockContacts';
 import ContactList from './components/contacts/ContactList';
-import ContactForm from "./components/contacts/ContactForm";
-import styles from './components/contacts/css/app.module.css';
+import styles from './App.css';
 
 function App() {
 
     const [contacts, setContacts] = useState([]);
     const [currentContact, setCurrentContact] = useState(null);
-
-    const handleAddOrUpdate = (contact) => {
-        if (contact.id) {
-            setContacts(contacts.map(c => c.id === contact.id ? contact : c));
-        } else {
-            const newContact = {
-                ...contact,
-                id: contacts.length > 0 ? Math.max(...contacts.map(c => c.id)) + 1 : 1,
-            };
-            setContacts([...contacts, newContact]);
-
-        }
-    };
 
     const handleDelete = (contactId) => {
         // Filter out the contact with the specified id
@@ -38,7 +24,7 @@ function App() {
     };
 
     return (
-        <div id="diaryContainer" className="{styles.diaryContainer}">
+        <div id="diaryContainer" className={styles.diaryContainer}>
             <header className={styles.header}>
                 <h1>My Contacts</h1>
             </header>
@@ -49,22 +35,18 @@ function App() {
                     onDelete={handleDelete}
                     onEdit={setCurrentContact}
                 />
-                <ContactForm
-                    initialContact={currentContact}
-                    handleSubmit={handleAddOrUpdate}
-                    buttonLabel={currentContact ? "Update Contact" : "Add Contact"}
-                />
             </main>
-            <div className="{styles.icon-stack}">
-                <button id="addContact" className="{styles.icon-button}">
-                    <img src="add-contact.png" className="{styles.img}" alt="Add Contact" />
+            <div className={styles.iconStack}>
+                <button id="addContact" className={styles.iconButton}>
+                    <img src="add-contact.png" className={styles.img} alt="Add Contact" />
                 </button>
-                <button id="deleteContact" className="{styles.icon-button}">
-                    <img src="delete-contact.png" className="{styles.img}" alt="Delete Contact" />
+                <button id="deleteContact" className={styles.iconButton}>
+                    <img src="delete-contact.png" className={styles.img} alt="Delete Contact" />
                 </button>
             </div>
         </div>
     );
+    
 }
 export default App;
 
