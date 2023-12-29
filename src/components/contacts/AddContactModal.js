@@ -20,21 +20,21 @@ function AddContactModal({ show, onClose, onSave }) {
             <div className={styles.modalContent}>
                 <span className={styles.close} onClick={onClose}>&times;</span>
                 <form onSubmit={handleSubmit}>
-                    <label>Name:</label>
                     <input
                         type="text"
+                        placeholder='Name'
                         value={newContact.name}
                         required
                         onChange={e => setNewContact({ ...newContact, name: e.target.value })}
                     />
-                    <label>Email:</label>
                     <input
+                    placeholder='Email'
                         type="email"
                         value={newContact.email}
                         onChange={e => setNewContact({ ...newContact, email: e.target.value })}
                     />
-                    <label>Phone:</label>
                     <input
+                    placeholder='Phone number'
                         type="text"
                         value={newContact.phone}
                         onChange={e => setNewContact({ ...newContact, phone: e.target.value })}
