@@ -1,12 +1,37 @@
 import React, { useState } from 'react';
 import MockContacts from './components/utils/MockContacts';
 import ContactList from './components/contacts/ContactList';
+import AddContactModal from './components/contacts/AddContactModal';
 import styles from './App.css';
 
 function App() {
 
+    
     const [contacts, setContacts] = useState([]);
     const [currentContact, setCurrentContact] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+
+    const handleAddClick = () => {
+        setShowModal(true);
+    };
+
+    const handleSaveContact = (contact) => {
+        handleAddOrUpdate(contact);
+        setShowModal(false);
+    };
+
+    const handleAddOrUpdate = (contact) => {
+        if (contact.id) {
+            setContacts(contacts.map(c => c.id === contact.id ? contact : c));
+        } else {
+            const newContact = {
+                ...contact,
+                id: contacts.length > 0 ? Math.max(...contacts.map(c => c.id)) + 1 : 1,
+            };
+            setContacts([...contacts, newContact]);
+
+        }
+    };
 
     const handleDelete = (contactId) => {
         // Filter out the contact with the specified id
@@ -28,7 +53,7 @@ function App() {
             <header className={styles.header}>
                 <h1>My Contacts</h1>
             </header>
-            <main className={styles.main}>
+            <main>
                 {contacts.length === 0 && <MockContacts onContactsLoaded={handleContactsLoaded} />}
                 <ContactList
                     contacts={contacts}
@@ -37,16 +62,21 @@ function App() {
                 />
             </main>
             <div className={styles.iconStack}>
-                <button id="addContact" className={styles.iconButton}>
+                <button id="addContact" className={styles.iconButton} onClick={handleAddClick}>
                     <img src="add-contact.png" className={styles.img} alt="Add Contact" />
                 </button>
-                <button id="deleteContact" className={styles.iconButton}>
+                <button id="deleteContact" className={styles.iconButton} onClick={handleDelete}>
                     <img src="delete-contact.png" className={styles.img} alt="Delete Contact" />
                 </button>
+                <AddContactModal
+                    show={showModal}
+                    onClose={() => setShowModal(false)}
+                    onSave={handleSaveContact}
+                />
             </div>
         </div>
     );
-    
+
 }
 export default App;
 

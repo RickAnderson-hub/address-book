@@ -136,6 +136,29 @@ main {
     font-size: 14px; /* Adjust size as needed */
 }
 
+
+main::before, main::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+main::before {
+    bottom: 10px;
+    right: 10px;
+    box-shadow: 10px 10px 6px -7px rgba(0, 0, 0, 0.5);
+}
+
+main::after {
+    top: 10px;
+    left: 10px;
+    box-shadow: -10px -10px 6px -7px rgba(0, 0, 0, 0.5);
+}
+
+
 /* Media queries */
 @media (max-width: 768px) {
     .icon-stack {
@@ -169,26 +192,3 @@ main {
         padding: 5px;
     }
 }
-
-main::before, main::after {
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    z-index: -1;
-}
-
-main::before {
-    bottom: 10px;
-    right: 10px;
-    box-shadow: 10px 10px 6px -7px rgba(0, 0, 0, 0.5);
-}
-
-main::after {
-    top: 10px;
-    left: 10px;
-    box-shadow: -10px -10px 6px -7px rgba(0, 0, 0, 0.5);
-}
-
-/* Additional styles for the leather texture, page effects, etc., can be added here */
