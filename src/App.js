@@ -44,6 +44,13 @@ function App() {
         }
     };
 
+    const handleEdit = (updatedContact) => {
+        setContacts(contacts.map(contact => 
+            contact.id === updatedContact.id ? updatedContact : contact
+        ));
+
+    };
+
     const handleContactsLoaded = (mockContacts) => {
         setContacts(mockContacts);
     };
@@ -58,15 +65,12 @@ function App() {
                 <ContactList
                     contacts={contacts}
                     onDelete={handleDelete}
-                    onEdit={setCurrentContact}
+                    onEdit={handleEdit}
                 />
             </main>
             <div className={styles.iconStack}>
                 <button id="addContact" className={styles.iconButton} onClick={handleAddClick}>
                     <img src="add-contact.png" className={styles.img} alt="Add Contact" />
-                </button>
-                <button id="deleteContact" className={styles.iconButton} onClick={handleDelete}>
-                    <img src="delete-contact.png" className={styles.img} alt="Delete Contact" />
                 </button>
                 <AddContactModal
                     show={showModal}
