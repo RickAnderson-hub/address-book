@@ -6,10 +6,17 @@ import styles from './App.css';
 
 function App() {
 
-    
+
     const [contacts, setContacts] = useState([]);
     const [currentContact, setCurrentContact] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const contactsPerPage = 3;
+    const indexOfLastContact = currentPage * contactsPerPage;
+    const indexOfFirstContact = indexOfLastContact - contactsPerPage;
+    const currentContacts = contacts.slice(indexOfFirstContact, indexOfLastContact);
+
+    const totalPages = Math.ceil(contacts.length / contactsPerPage);
 
     const handleAddClick = () => {
         setShowModal(true);
@@ -45,7 +52,7 @@ function App() {
     };
 
     const handleEdit = (updatedContact) => {
-        setContacts(contacts.map(contact => 
+        setContacts(contacts.map(contact =>
             contact.id === updatedContact.id ? updatedContact : contact
         ));
 
@@ -62,14 +69,27 @@ function App() {
             </header>
             <main>
                 {contacts.length === 0 && <MockContacts onContactsLoaded={handleContactsLoaded} />}
-                <ContactList
-                    contacts={contacts}
-                    onDelete={handleDelete}
-                    onEdit={handleEdit}
-                />
+                <div className="leftPage">
+                    <ContactList
+                        contacts={currentContacts}
+                        onDelete={handleDelete}
+                        onEdit={handleEdit}
+                    />
+                </div>
             </main>
+            <div className={styles.pagination}>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                    <button
+                        key={page}
+                        onClick={() => setCurrentPage(page)}
+                        disabled={currentPage === page}
+                    >
+                        {page}
+                    </button>
+                ))}
+            </div>
             <div className={styles.iconStack}>
-                <button id="addContact" className={styles.iconButton} onClick={handleAddClick}>
+                <button className={styles.iconButton} onClick={handleAddClick}>
                     <img src="add-contact.png" className={styles.img} alt="Add Contact" />
                 </button>
                 <AddContactModal
