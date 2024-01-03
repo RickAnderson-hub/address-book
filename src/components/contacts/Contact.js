@@ -8,6 +8,7 @@ function Contact({ contact, onDelete, onEdit }) {
 
     const handleEditClick = () => {
         setIsEditing(true);
+        setErrors({}); // Clear errors when starting to edit again
     };
 
     const handleSaveClick = () => {
@@ -48,6 +49,15 @@ function Contact({ contact, onDelete, onEdit }) {
                 />
                 {errors.name && <span style={{ color: 'red' }}>{errors.name}</span>}
 
+                <input
+                    type="text"
+                    name="surname"
+                    value={editableContact.surname}
+                    onChange={handleChange}
+                    required
+                />
+                {errors.surname && <span style={{ color: 'red' }}>{errors.surname}</span>}
+
                 <input type="email"
                     data-testid='Email'
                     name="email"
@@ -58,8 +68,8 @@ function Contact({ contact, onDelete, onEdit }) {
                 {errors.email && <span style={{ color: 'red' }}>{errors.email}</span>}
 
                 <input type="text"
-                    name="phone"
-                    value={editableContact.phone}
+                    name="phonenumber"
+                    value={editableContact.phonenumber}
                     onChange={handleChange}
                 />
 
@@ -74,9 +84,9 @@ function Contact({ contact, onDelete, onEdit }) {
     return (
         <div className={styles.contactForm}>
             <li className="list-group-item">
-                <h5>{contact.name}</h5>
+                <h5>{contact.name} {contact.surname}</h5>
                 <p>Email: {contact.email}</p>
-                <p>Phone: {contact.phone}</p>
+                <p>Phone: {contact.phonenumber}</p>
             </li>
             <div className={styles.contactForm}>
                 <button data-testid="edit-contact" onClick={handleEditClick}>Edit</button>

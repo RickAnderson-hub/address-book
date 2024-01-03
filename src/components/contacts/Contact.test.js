@@ -8,9 +8,10 @@ describe('Contact Component', () => {
     // Mock Contact data
     const mockContact = {
         id: 1,
-        name: 'Alice Johnson',
+        name: 'Alice',
+        surname: 'Johnson',
         email: 'alice@example.com',
-        phone: '123-456-7890'
+        phonenumber: '123-456-7890'
     };
 
     it('renders contact information', () => {
@@ -23,14 +24,15 @@ describe('Contact Component', () => {
     it('enters edit mode', () => {
         render(<Contact contact={mockContact} onDelete={() => { }} onEdit={() => { }} />);
         fireEvent.click(screen.getByText('Edit'));
-        expect(screen.getByDisplayValue('Alice Johnson')).toBeInTheDocument();
+        expect(screen.getByDisplayValue('Alice')).toBeInTheDocument();
+        expect(screen.getByDisplayValue('Johnson')).toBeInTheDocument();
         expect(screen.getByDisplayValue('alice@example.com')).toBeInTheDocument();
     });
 
     it('validates input fields', () => {
         render(<Contact contact={mockContact} onDelete={() => { }} onEdit={() => { }} />);
         fireEvent.click(screen.getByText('Edit'));
-        fireEvent.change(screen.getByDisplayValue('Alice Johnson'), { target: { value: '' } });
+        fireEvent.change(screen.getByDisplayValue('Alice'), { target: { value: '' } });
         fireEvent.click(screen.getByText('Save'));
         expect(screen.getByText('Name is required.')).toBeInTheDocument();
     });

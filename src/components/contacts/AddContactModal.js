@@ -3,7 +3,7 @@ import styles from './css/addContactModal.module.css';
 
 
 function AddContactModal({ show, onClose, onSave }) {
-    const [newContact, setNewContact] = useState({ name: '', email: '', phone: '' });
+    const [newContact, setNewContact] = useState({ name: '', email: '', phonenumber: '' });
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -28,6 +28,13 @@ function AddContactModal({ show, onClose, onSave }) {
                         onChange={e => setNewContact({ ...newContact, name: e.target.value })}
                     />
                     <input
+                        type="text"
+                        placeholder='Surname'
+                        value={newContact.surname}
+                        required
+                        onChange={e => setNewContact({ ...newContact, surname: e.target.value })}
+                    />
+                    <input
                     placeholder='Email'
                         type="email"
                         value={newContact.email}
@@ -36,8 +43,8 @@ function AddContactModal({ show, onClose, onSave }) {
                     <input
                     placeholder='Phone number'
                         type="text"
-                        value={newContact.phone}
-                        onChange={e => setNewContact({ ...newContact, phone: e.target.value })}
+                        value={newContact.phonenumber}
+                        onChange={e => setNewContact({ ...newContact, phonenumber: e.target.value })}
                     />
                     <button type="submit">Add Contact</button>
                 </form>

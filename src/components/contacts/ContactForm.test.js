@@ -4,7 +4,7 @@ import ContactForm from './ContactForm';
 
 describe('ContactForm', () => {
     it('renders correctly with initial values', () => {
-        const initialContact = { name: 'Alice', email: 'alice@example.com', phone: '1234567890' };
+        const initialContact = { name: 'Alice', email: 'alice@example.com', phonenumber: '1234567890' };
         render(<ContactForm initialContact={initialContact} buttonLabel="Save" />);
 
         expect(screen.getByPlaceholderText('Name').value).toBe('Alice');
@@ -14,16 +14,16 @@ describe('ContactForm', () => {
 
     it('calls handleSubmit with updated values on form submission', () => {
         const mockHandleSubmit = jest.fn();
-        const initialContact = { name: '', email: '', phone: '' };
+        const initialContact = { name: '', email: '', phonenumber: '' };
         
         render(<ContactForm initialContact={initialContact} handleSubmit={mockHandleSubmit} buttonLabel="Add" />);
 
-        fireEvent.change(screen.getByPlaceholderText('Name'), { target: { name: 'name', value: 'Bob' } });
-        fireEvent.change(screen.getByPlaceholderText('Email'), { target: { email: 'email', value: 'email@not.com' } });
-        fireEvent.change(screen.getByPlaceholderText('Phone'), { target: { phone: 'phone', value: '123456' } });
+        fireEvent.change(screen.getByPlaceholderText('Name'), { target: { value: 'Bob' } });
+        fireEvent.change(screen.getByPlaceholderText('Email'), { target: { value: 'email@not.com' } });
+        fireEvent.change(screen.getByPlaceholderText('Phone'), { target: { value: '123456' } });
 
         fireEvent.click(screen.getByText('Add'));
 
-        expect(mockHandleSubmit).toHaveBeenCalledWith({ name: 'Bob', email: 'email@not.com', phone: '123456' });
+        expect(mockHandleSubmit).toHaveBeenCalledWith({ name: 'Bob', email: 'email@not.com', phonenumber: '123456' });
     });
 });

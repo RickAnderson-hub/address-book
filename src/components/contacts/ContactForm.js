@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 function ContactForm({ initialContact, handleSubmit, buttonLabel = 'Submit' }) {
-    const [contact, setContact] = useState(initialContact || { name: '', email: '', phone: '' });
+    const [contact, setContact] = useState(initialContact || { name: '', email: '', phonenumber: '' });
 
     useEffect(() => {
         if (initialContact) {
@@ -21,6 +21,7 @@ function ContactForm({ initialContact, handleSubmit, buttonLabel = 'Submit' }) {
     return (
         <form onSubmit={onSubmit}>
             <div>
+                <label htmlFor="name">Name:</label>
                 <input
                     name="name"
                     value={contact.name}
@@ -28,7 +29,16 @@ function ContactForm({ initialContact, handleSubmit, buttonLabel = 'Submit' }) {
                     placeholder="Name"
                     required
                 />
+                <label htmlFor="surname">Surname:</label>
+                <input
+                    name="surname"
+                    value={contact.surname}
+                    onChange={onChange}
+                    placeholder="Surname"
+                    required
+                />
 
+                <label htmlFor="email">Email:</label>
                 <input
                     name="email"
                     value={contact.email}
@@ -36,9 +46,10 @@ function ContactForm({ initialContact, handleSubmit, buttonLabel = 'Submit' }) {
                     placeholder="Email"
                 />
 
+                <label htmlFor="phone">Phone:</label>
                 <input
-                    name="phone"
-                    value={contact.phone}
+                    name="phonenumber"
+                    value={contact.phonenumber}
                     onChange={onChange}
                     placeholder="Phone"
                 />
