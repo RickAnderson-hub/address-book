@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import MockContacts from './components/utils/MockContacts';
+import React, { useState, useEffect } from 'react';
 import ContactList from './components/contacts/ContactList';
 import AddContactModal from './components/contacts/AddContactModal';
 import styles from './App.css';
@@ -15,8 +14,30 @@ function App() {
     const indexOfLastContact = currentPage * contactsPerPage;
     const indexOfFirstContact = indexOfLastContact - contactsPerPage;
     const currentContacts = contacts.slice(indexOfFirstContact, indexOfLastContact);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const totalPages = Math.ceil(contacts.length / contactsPerPage);
+
+    // Fetch contacts when the component mounts
+    useEffect(() => {
+        fetch('http://localhost:8080/contacts')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                setContacts(data.content);
+                setIsLoading(false);
+            })
+            .catch(error => {
+                console.error('Error fetching contacts:', error);
+                setError(error);
+                setIsLoading(false);
+            });
+    }, []);
 
     const handleAddClick = () => {
         setShowModal(true);
@@ -58,24 +79,21 @@ function App() {
 
     };
 
-    const handleContactsLoaded = (mockContacts) => {
-        setContacts(mockContacts);
-    };
-
     return (
         <div id="diaryContainer" className={styles.diaryContainer}>
             <header className={styles.header}>
                 <h1>My Contacts</h1>
             </header>
             <main>
-                {contacts.length === 0 && <MockContacts onContactsLoaded={handleContactsLoaded} />}
-                <div className="leftPage">
-                    <ContactList
-                        contacts={currentContacts}
-                        onDelete={handleDelete}
-                        onEdit={handleEdit}
-                    />
-                </div>
+                {isLoading ? (<div>Loading...</div>) : error ? (<div>Error: {error.message}</div>) : (
+                    <div className="leftPage">
+                        <ContactList
+                            contacts={currentContacts}
+                            onDelete={handleDelete}
+                            onEdit={handleEdit}
+                        />
+                    </div>
+                )}
             </main>
             <div className={styles.pagination}>
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
