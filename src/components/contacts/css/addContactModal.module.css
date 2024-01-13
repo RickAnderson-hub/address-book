@@ -44,3 +44,14 @@ form {
     text-decoration: none;
     cursor: pointer;
 }
+
+.error {
+    color: #ff0000; /* Bright red color for high visibility */
+    background-color: #fff3f3; /* Light red background for contrast */
+    border: 1px solid #ff0000; /* Red border to emphasize the error box */
+    padding: 10px; /* Padding for spacing inside the box */
+    margin: 10px 0; /* Margin for spacing outside the box */
+    border-radius: 5px; /* Rounded corners */
+    text-align: center; /* Center the text inside the box */
+    font-weight: bold; /* Bold text to make it stand out */
+}

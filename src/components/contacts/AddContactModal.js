@@ -4,21 +4,47 @@ import styles from './css/addContactModal.module.css';
 
 function AddContactModal({ show, onClose, onSave }) {
     const [newContact, setNewContact] = useState({ name: '', email: '', phonenumber: '' });
+    const [errorMessage, setErrorMessage] = useState('');
+    const baseUrl = "http://localhost:8080/contacts";
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        onSave(newContact);
-        onClose(); // Close modal after saving
+        setErrorMessage(''); // Reset error message on new submission
+
+        fetch(baseUrl + '/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newContact)
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                return response.text().then(text => { throw new Error(text) });
+            }
+        })
+        .then(data => {
+            onSave(data); // Pass the created contact back
+            onClose();   // Close modal after successful save
+        })
+        .catch(error => {
+            console.error('Error creating contact:', error);
+            setErrorMessage(error.message || 'Error occurred while creating contact');
+        });
     };
 
     if (!show) {
         return null;
     }
 
+
     return (
         <div className={styles.modal}>
             <div className={styles.modalContent}>
                 <span className={styles.close} onClick={onClose}>&times;</span>
+                {errorMessage && <div className={styles.error}>{errorMessage}</div>}
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
