@@ -22,7 +22,7 @@ function App() {
 
     // Fetch contacts when the component mounts
     useEffect(() => {
-        fetch('$(baseUrl)')
+        fetch(baseUrl)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -62,15 +62,27 @@ function App() {
     };
 
     const handleDelete = (contactId) => {
-        // Filter out the contact with the specified id
-        const updatedContacts = contacts.filter(contact => contact.id !== contactId);
-        setContacts(updatedContacts);
-
-        // If the current contact is the one being deleted, reset the current contact
-        if (currentContact && currentContact.id === contactId) {
-            setCurrentContact(null);
-        }
+        fetch(`${baseUrl}/delete/${contactId}`, { method: 'DELETE' })
+            .then(response => {
+                if (response.ok) {
+                    // Filter out the contact with the specified id
+                    const updatedContacts = contacts.filter(contact => contact.id !== contactId);
+                    setContacts(updatedContacts);
+                    // If the current contact is the one being deleted, reset the current contact
+                    if (currentContact && currentContact.id === contactId) {
+                        setCurrentContact(null);
+                    }
+                } else {
+                    // Handle the error response here
+                    console.error('Error deleting contact:', response.statusText);
+                }
+            })
+            .catch(error => {
+                // Handle any network error here
+                console.error('Network error:', error);
+            });
     };
+    
 
     const handleEdit = (updatedContact) => {
         // Construct the URL for the PUT request
