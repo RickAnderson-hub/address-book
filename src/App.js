@@ -16,12 +16,13 @@ function App() {
     const currentContacts = contacts.slice(indexOfFirstContact, indexOfLastContact);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const baseUrl = "http://localhost:8080/contacts";
 
     const totalPages = Math.ceil(contacts.length / contactsPerPage);
 
     // Fetch contacts when the component mounts
     useEffect(() => {
-        fetch('http://localhost:8080/contacts')
+        fetch('$(baseUrl)')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -57,7 +58,6 @@ function App() {
                 id: contacts.length > 0 ? Math.max(...contacts.map(c => c.id)) + 1 : 1,
             };
             setContacts([...contacts, newContact]);
-
         }
     };
 
@@ -73,11 +73,35 @@ function App() {
     };
 
     const handleEdit = (updatedContact) => {
-        setContacts(contacts.map(contact =>
-            contact.id === updatedContact.id ? updatedContact : contact
-        ));
-
+        // Construct the URL for the PUT request
+        const url = `${baseUrl}/update/${updatedContact.id}`;
+    
+        // Make the PUT request to update the contact
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedContact),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Update the contacts in the state with the updated contact
+            setContacts(contacts.map(contact =>
+                contact.id === data.id ? data : contact
+            ));
+        })
+        .catch(error => {
+            console.error('Error updating contact:', error);
+            // Handle errors here, such as displaying a message to the user
+        });
     };
+    
 
     return (
         <div id="diaryContainer" className={styles.diaryContainer}>
@@ -86,7 +110,7 @@ function App() {
             </header>
             <main>
                 {isLoading ? (<div>Loading...</div>) : error ? (<div>Error: {error.message}</div>) : (
-                    <div className="leftPage">
+                    <div>
                         <ContactList
                             contacts={currentContacts}
                             onDelete={handleDelete}
@@ -95,7 +119,7 @@ function App() {
                     </div>
                 )}
             </main>
-            <div className={styles.pagination}>
+            <div>
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                     <button
                         key={page}
