@@ -1,3 +1,95 @@
+# Address Book App
+
+A React-based address book application that allows users to manage their contacts. Features include adding, editing, deleting contacts, searching, and pagination.
+
+## Features
+
+- View a list of contacts with pagination
+- Add new contacts via a modal
+- Edit existing contacts inline
+- Delete contacts with confirmation
+- Search contacts by name, surname, or email
+- Responsive design with Bootstrap styling
+- Form validation for inputs
+- Error handling for API calls
+- Environment variable support for API URL
+
+## Technologies Used
+
+- React 19
+- Bootstrap 5
+- CSS Modules
+- Testing Library
+- PropTypes for type checking
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Start the development server: `npm start`
+4. The app will run on [http://localhost:3000](http://localhost:3000)
+
+### Environment Variables
+
+Create a `.env` file in the root directory and set:
+
+```
+REACT_APP_API_BASE_URL=http://localhost:8080/contacts
+```
+
+### Running Tests
+
+`npm test`
+
+### Building for Production
+
+`npm run build`
+
+## API Endpoints
+
+The app expects a backend API with the following endpoints:
+
+- GET `/contacts` - Fetch all contacts
+- POST `/contacts/create` - Create a new contact
+- PUT `/contacts/update/{id}` - Update a contact
+- DELETE `/contacts/delete/{id}` - Delete a contact
+
+## Project Structure
+
+```
+src/
+  components/
+    contacts/
+      AddContactModal.js
+      Contact.js
+      ContactForm.js
+      ContactList.js
+      css/
+        addContactModal.module.css
+        contactForm.module.css
+  App.js
+  App.css
+  index.js
+```
+
+## Improvements Made
+
+- Added search functionality
+- Improved error handling and user feedback
+- Added form validation
+- Implemented pagination styling
+- Used environment variables for API URL
+- Added PropTypes for type checking
+- Optimized components with React.memo
+- Consistent theming and naming
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

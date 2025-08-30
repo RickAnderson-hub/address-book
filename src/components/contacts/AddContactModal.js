@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import ContactForm from './ContactForm';
 import styles from './css/addContactModal.module.css';
 
 
-function AddContactModal({ show, onClose, onSave }) {
-    const [newContact, setNewContact] = useState({ name: '', email: '', phonenumber: '' });
+const AddContactModal = React.memo(({ show, onClose, onSave }) => {
     const [errorMessage, setErrorMessage] = useState('');
-    const baseUrl = "http://localhost:8080/contacts";
+    const baseUrl = process.env.REACT_APP_API_BASE_URL || "http://localhost:8080/contacts";
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const handleSubmit = (contact) => {
         setErrorMessage(''); // Reset error message on new submission
 
         fetch(baseUrl + '/create', {
@@ -16,7 +16,7 @@ function AddContactModal({ show, onClose, onSave }) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(newContact)
+            body: JSON.stringify(contact)
         })
         .then(response => {
             if (response.ok) {
@@ -45,38 +45,16 @@ function AddContactModal({ show, onClose, onSave }) {
             <div className={styles.modalContent}>
                 <span className={styles.close} onClick={onClose}>&times;</span>
                 {errorMessage && <div className={styles.error}>{errorMessage}</div>}
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        placeholder='Name'
-                        value={newContact.name}
-                        required
-                        onChange={e => setNewContact({ ...newContact, name: e.target.value })}
-                    />
-                    <input
-                        type="text"
-                        placeholder='Surname'
-                        value={newContact.surname}
-                        required
-                        onChange={e => setNewContact({ ...newContact, surname: e.target.value })}
-                    />
-                    <input
-                    placeholder='Email'
-                        type="email"
-                        value={newContact.email}
-                        onChange={e => setNewContact({ ...newContact, email: e.target.value })}
-                    />
-                    <input
-                    placeholder='Phone number'
-                        type="text"
-                        value={newContact.phonenumber}
-                        onChange={e => setNewContact({ ...newContact, phonenumber: e.target.value })}
-                    />
-                    <button type="submit">Add Contact</button>
-                </form>
+                <ContactForm handleSubmit={handleSubmit} buttonLabel="Add Contact" />
             </div>
         </div>
     );
-}
+});
+
+AddContactModal.propTypes = {
+    show: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
+};
 
 export default AddContactModal;

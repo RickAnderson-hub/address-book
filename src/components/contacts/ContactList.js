@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Contact from './Contact';
 
-function ContactList({ contacts, onDelete, onEdit }) {
+const ContactList = React.memo(({ contacts, onDelete, onEdit }) => {
     return (
         <ul className="list-group">
             {contacts.map(contact => (
@@ -9,6 +10,20 @@ function ContactList({ contacts, onDelete, onEdit }) {
             ))}
         </ul>
     );
-}
+});
+
+ContactList.propTypes = {
+    contacts: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            name: PropTypes.string.isRequired,
+            surname: PropTypes.string,
+            email: PropTypes.string,
+            phonenumber: PropTypes.string,
+        })
+    ).isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onEdit: PropTypes.func.isRequired,
+};
 
 export default ContactList;

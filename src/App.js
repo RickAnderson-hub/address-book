@@ -10,15 +10,23 @@ function App() {
     const [currentContact, setCurrentContact] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState('');
     const contactsPerPage = 3;
     const indexOfLastContact = currentPage * contactsPerPage;
     const indexOfFirstContact = indexOfLastContact - contactsPerPage;
-    const currentContacts = contacts.slice(indexOfFirstContact, indexOfLastContact);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const baseUrl = "http://localhost:8080/contacts";
+    const [deleteError, setDeleteError] = useState(null);
+    const baseUrl = process.env.REACT_APP_API_BASE_URL || "http://localhost:8080/contacts";
 
-    const totalPages = Math.ceil(contacts.length / contactsPerPage);
+    // Filter contacts based on search term
+    const filteredContacts = contacts.filter(contact =>
+        contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        contact.surname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        contact.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    const totalPages = Math.ceil(filteredContacts.length / contactsPerPage);
+    const currentContacts = filteredContacts.slice(indexOfFirstContact, indexOfLastContact);
 
     // Fetch contacts when the component mounts
     useEffect(() => {
@@ -62,6 +70,7 @@ function App() {
     };
 
     const handleDelete = (contactId) => {
+        setDeleteError(null);
         fetch(`${baseUrl}/delete/${contactId}`, { method: 'DELETE' })
             .then(response => {
                 if (response.ok) {
@@ -74,11 +83,13 @@ function App() {
                     }
                 } else {
                     // Handle the error response here
+                    setDeleteError('Failed to delete contact. Please try again.');
                     console.error('Error deleting contact:', response.statusText);
                 }
             })
             .catch(error => {
                 // Handle any network error here
+                setDeleteError('Network error. Please check your connection.');
                 console.error('Network error:', error);
             });
     };
@@ -116,13 +127,21 @@ function App() {
     
 
     return (
-        <div id="diaryContainer" className={styles.diaryContainer}>
+        <div id="addressBookContainer" className={styles.addressBookContainer}>
             <header className={styles.header}>
                 <h1>My Contacts</h1>
+                <input
+                    type="text"
+                    placeholder="Search contacts..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className={styles.searchInput}
+                />
             </header>
             <main>
                 {isLoading ? (<div>Loading...</div>) : error ? (<div>Error: {error.message}</div>) : (
                     <div>
+                        {deleteError && <div style={{ color: 'red' }}>{deleteError}</div>}
                         <ContactList
                             contacts={currentContacts}
                             onDelete={handleDelete}
@@ -131,12 +150,13 @@ function App() {
                     </div>
                 )}
             </main>
-            <div>
+            <div className={styles.pagination}>
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                     <button
                         key={page}
                         onClick={() => setCurrentPage(page)}
                         disabled={currentPage === page}
+                        className={styles.pageButton}
                     >
                         {page}
                     </button>

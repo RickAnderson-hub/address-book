@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styles from './css/contactForm.module.css'
 
-function Contact({ contact, onDelete, onEdit }) {
+const Contact = React.memo(({ contact, onDelete, onEdit }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editableContact, setEditableContact] = useState({ ...contact });
     const [errors, setErrors] = useState({});
@@ -94,6 +95,18 @@ function Contact({ contact, onDelete, onEdit }) {
             </div>
         </div>
     );
-}
+});
+
+Contact.propTypes = {
+    contact: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        surname: PropTypes.string,
+        email: PropTypes.string,
+        phonenumber: PropTypes.string,
+    }).isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onEdit: PropTypes.func.isRequired,
+};
 
 export default Contact;
